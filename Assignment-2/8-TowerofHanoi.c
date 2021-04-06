@@ -1,4 +1,5 @@
 // Aditya Mitra 20BCE2044
+//Program to implement Tower of Hanoi problem
 #include <stdio.h>
 void Hanoi(int n, char x, char y, char z) // Recursive function to move disks
 {

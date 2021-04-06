@@ -1,6 +1,5 @@
 #include <stdio.h>
 #include<stdlib.h>
-using namespace std;
 // Node structure containing power and coefficient of
 // variable
 struct Node
@@ -111,9 +110,9 @@ int main()
     // Create second list of -5x^1 - 5x^0
     create_node(-5, 1, &poly2);
     create_node(5, 0, &poly2);
-    printf("1st Number: ");
+    printf("1st Polynomial: ");
     show(poly1);
-    printf("\n2nd Number: ");
+    printf("\n2nd Polynomial: ");
     show(poly2);
     poly = (struct Node *)malloc(sizeof(struct Node));
     // Function add two polynomial numbers

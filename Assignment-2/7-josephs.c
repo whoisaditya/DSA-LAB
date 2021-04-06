@@ -1,4 +1,5 @@
 // Aditya Mitra 20BCE2044
+//Program to implement josephus problem
 #include <stdio.h>
 
 int josephus(int n, int k)
