@@ -43,7 +43,7 @@ void pop(){
 
     top=top->next;
 
-    printf("Details of the node that has ben popped : \n");
+    printf("Details of the node that has been popped : \n");
     printf("Registration Number : %s\n",pointer->regno);
     printf("Name : %s\n",pointer->name);
     printf("Age : %d\n\n",pointer->age);
