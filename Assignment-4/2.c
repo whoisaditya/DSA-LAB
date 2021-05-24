@@ -61,7 +61,7 @@ int findMax(struct node *root)
     // Base case
     if (root == NULL)
     {
-        return INT_MAX;
+        return INT_MIN;
     }
 
     // Return maximum of 3 values:
@@ -89,7 +89,7 @@ int findMin(struct node *root)
     // Base case
     if (root == NULL)
     {
-        return INT_MIN;
+        return INT_MAX;
     }
 
     // Return Minimum of 3 values:
@@ -119,7 +119,7 @@ int main()
     struct node *root = NULL;
     int ch, temp;
 
-    //Create a sample treee for the user
+    //Create a sample tree for the user
     printf("Sample Tree Created\n");
 
     root = insert(root, 50);

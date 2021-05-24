@@ -9,12 +9,12 @@ struct node
 	struct node *left, *right;
 };
 
-typedef struct node * nptr;
+typedef struct node * nodeptr;
 
 // Function to create new node
-nptr newNode(char c)
+nodeptr newNode(char c)
 {
-	nptr n = new node;
+	nodeptr n = new node;
 
 	n->data = c;
 	n->left = NULL;
@@ -24,17 +24,17 @@ nptr newNode(char c)
 }
 
 // Function to build Expression Tree
-nptr constructTree(string& s)
+nodeptr constructTree(string& str)
 {
 	// Loop Variable
 	int i;
  
     // Stack to hold nodes
-    stack<nptr> stN;
+    stack<nodeptr> stN;
  
     // Stack to hold characters
     stack<char> stC;
-    nptr t, t1, t2;
+    nodeptr t, t1, t2;
  
     // Prioritising the operators
     int p[123] = { 0 };
@@ -43,21 +43,21 @@ nptr constructTree(string& s)
 	p['^'] = 3;
     p[')'] = 0;
  
-    for (i = 0; i < s.length(); i++)
+    for (i = 0; i < str.length(); i++)
     {
-        if (s[i] == '(') // Push '(' in char stack
+        if (str[i] == '(') // Push '(' in char stack
 		{  
-            stC.push(s[i]);
+            stC.push(str[i]);
         }
-        else if (isalpha(s[i])) // Push the operands in node stack
+        else if (isalpha(str[i])) // Push the operands in node stack
         {
-            t = newNode(s[i]);
+            t = newNode(str[i]);
             stN.push(t);
         }
-        else if (p[s[i]] > 0)
+        else if (p[str[i]] > 0)
         {
             // If an operator with lower or same associativity appears
-            while (!stC.empty() && stC.top() != '(' && ((s[i] != '^' && p[stC.top()] >= p[s[i]]) || (s[i] == '^' && p[stC.top()] > p[s[i]])))
+            while (!stC.empty() && stC.top() != '(' && ((str[i] != '^' && p[stC.top()] >= p[str[i]]) || (str[i] == '^' && p[stC.top()] > p[str[i]])))
             {
                 // Get and Remove the top element from the character stack
                 t = newNode(stC.top());
@@ -79,10 +79,10 @@ nptr constructTree(string& s)
                 stN.push(t);
             }
  
-            // Push s[i] to char stack
-            stC.push(s[i]);
+            // Push str[i] to char stack
+            stC.push(str[i]);
         }
-        else if (s[i] == ')') 
+        else if (str[i] == ')') 
 		{
             while (!stC.empty() && stC.top() != '(')
             {
@@ -106,7 +106,7 @@ nptr constructTree(string& s)
                 stN.push(t);
             }
 
-			// Pop s[i] from char stack
+			// Pop str[i] from char stack
             stC.pop();
         }
     }
@@ -115,9 +115,8 @@ nptr constructTree(string& s)
     return t;
 }
 
-// Function to print the post order
-// traversal of the tree
-void postorder(nptr root)
+// Function to print the postorder traversal of the tree
+void postorder(nodeptr root)
 {
 	if (root)
 	{
@@ -126,17 +125,9 @@ void postorder(nptr root)
 		cout << root->data << " ";
 	}
 }
-void inorder(nptr root)
-{
-    if (root)
-    {
-        inorder(root->left);
-        cout << root->data << " ";
-        inorder(root->right);
-    }
-}
 
-void preorder(nptr root)
+// Function to print the preorder traversal of the tree
+void preorder(nodeptr root)
 {
     if (root)
     {
@@ -149,20 +140,16 @@ void preorder(nptr root)
 // Driver code
 int main()
 {
-	string s;
+	string str;
 	cout << "Enter an infix expression: ";
-    cin >> s;
+    getline(cin, str);
 
-	s = "(a^b^(c/d/e-f)^(x*y-m*n))";
-	s = "(" + s;
-	s += ")";
-	nptr root = constructTree(s);
+	str = "(" + str;
+	str += ")";
+	
+	nodeptr root = constructTree(str);
 
 	// Function call
-	cout<< "Inorder:   " ;
-	inorder(root);
-	cout<< "\n";
-
 	cout << "Preorder: ";
 	preorder(root);
 	cout<< "\n";

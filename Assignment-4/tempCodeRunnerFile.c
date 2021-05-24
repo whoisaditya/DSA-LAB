@@ -185,8 +185,6 @@ int main()
                 scanf("%d", &temp);
 
                 insert(root, temp);
-                
-                printf("\nInorder traversal of the modified tree \n");
                 inorder(root);
 
                 break;
