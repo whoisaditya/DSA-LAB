@@ -4,6 +4,7 @@ using namespace std;
 
 class Graph
 {
+
     // Number of vertex
     int v;
 
@@ -14,14 +15,15 @@ public:
     // Adjacency matrix
     int **adj;
 
+
     // To create the initial adjacency matrix
     Graph(int v, int e);
 
     // Function to insert a new edge
     void addEdge(int start, int e);
 
-    // Function to display the BFS traversal
-    void BFS(int start);
+    // Function to display the DFS traversal
+    void DFS(int start, vector<bool> &visited);
 };
 
 // Function to fill the empty adjacency matrix
@@ -30,12 +32,12 @@ Graph::Graph(int v, int e)
     this->v = v;
     this->e = e;
     adj = new int *[v];
-    for (int r = 0; r < v; r++)
+    for (int row = 0; row < v; row++)
     {
-        adj[r] = new int[v];
-        for (int c = 0; c < v; c++)
+        adj[row] = new int[v];
+        for (int column = 0; column < v; column++)
         {
-            adj[r][c] = 0;
+            adj[row][column] = 0;
         }
     }
 }
@@ -49,41 +51,25 @@ void Graph::addEdge(int start, int e)
     adj[e][start] = 1;
 }
 
-// Function to perform BFS on the graph
-void Graph::BFS(int start)
+// Function to perform DFS on the graph
+void Graph::DFS(int start, vector<bool> &visited)
 {
-    // Visited vector to so that
-    // a vertex is not visited more than once
-    // Initializing the vector to false as no
-    // vertex is visited at the beginning
-    vector<bool> visited(v, false);
-    vector<int> q;
-    q.push_back(start);
 
-    // Set source as visited
+    // Print the current node
+    cout << start << " ";
+
+    // Set current node as visited
     visited[start] = true;
 
-    int vis;
-    while (!q.empty())
+    // For every node of the graph
+    for (int i = 0; i < v; i++)
     {
-        vis = q[0];
 
-        // Print the current node
-        cout << vis << " ";
-        q.erase(q.begin());
-
-        // For every adjacent vertex to the current vertex
-        for (int i = 0; i < v; i++)
+        // If some node is adjacent to the current node
+        // and it has not already been visited
+        if (adj[start][i] == 1 && (!visited[i]))
         {
-            if (adj[vis][i] == 1 && (!visited[i]))
-            {
-
-                // Push the adjacent node to the queue
-                q.push_back(i);
-
-                // Set
-                visited[i] = true;
-            }
+            DFS(i, visited);
         }
     }
 }
@@ -128,23 +114,35 @@ int main()
                 cout << endl;
             }
 
-            cout << "BFS Traversal : ";
-            G.BFS(0);
+            // Visited vector to so that
+            // a vertex is not visited more than once
+            // Initializing the vector to false as no
+            // vertex is visited at the beginning
+            vector<bool> visited(v, false);
+
+            cout << "DFS Traversal : ";
+            // Perform DFS
+            G.DFS(0, visited);
+
             break;
         }
 
         case 2:
         {
-            v = 7;
-            e = 6;
+            v = 5, e = 4;
 
             Graph G(v, e);
+
+            // Visited vector to so that
+            // a vertex is not visited more than once
+            // Initializing the vector to false as no
+            // vertex is visited at the beginning
+            vector<bool> visited(v, false);
+
             G.addEdge(0, 1);
             G.addEdge(0, 2);
-            G.addEdge(1, 3);
-            G.addEdge(1, 4);
-            G.addEdge(2, 5);
-            G.addEdge(2, 6);
+            G.addEdge(0, 3);
+            G.addEdge(0, 4);
 
             cout << "Adjadency matrix" << endl;
 
@@ -157,8 +155,11 @@ int main()
                 cout << endl;
             }
 
-            cout << "\nBFS Traversal : ";
-            G.BFS(0);
+
+            cout << "\nDFS Traversal : ";
+            // Perform DFS
+            G.DFS(0, visited);
+
             break;
         }
 
@@ -167,10 +168,12 @@ int main()
             exit(0);
             break;
         }
+
         default:
         {
             cout << "Invalid Input";
         }
+
         }
     }
 }
